@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: app-deployment
+  labels:
+    app: app-deployment
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: app-deployment
+  template:
+    metadata:
+      labels:
+        app: app-deployment
+    spec:
+      containers:
+      - name: app-deployment
+        image: app-deployment
+        env:
+          - name: secret_key
+            valueFrom:
+              secretKeyRef:
+                name: gitaiosecret
+                key: secret_key
+        imagePullPolicy: Never
+        ports:
+        - containerPort: 8080
